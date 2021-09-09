@@ -9,8 +9,8 @@ const options = {
 
 const request = http.request(options, function (res) {
   let data = '';
-  res.on('data', function (chunk) {
-    data += chunk;
+  res.on('data', function (returnedData) {
+    data += returnedData;
     // console.log(data);
   });
 
