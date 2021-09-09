@@ -1,7 +1,7 @@
 const http = require('https');
 let fs = require('fs');
 const cheerio = require('cheerio');
-const axios = require('axios');
+const download = require('image-downloader');
 
 const options = {
   host: 'memegen-link-examples-upleveled.netlify.app',
@@ -35,10 +35,20 @@ const request = http.request(options, function (res) {
       }
     }
 
-    console.log(neededUrls);
-    fs.writeFile('./memes/memes.json', JSON.stringify(neededUrls), (error) => {
-      if (error) throw error;
-    });
+    // loop over the array and parse all the url element to the image downloader package!
+    for (const urls of neededUrls) {
+      const option = {
+        url: urls,
+        dest: './memes',
+      };
+
+      download
+        .image(option)
+        .then(({ filename }) => {
+          console.log(`Please refer to folder ${filename}`);
+        })
+        .catch((err) => console.error(err));
+    }
   });
 });
 request.on('error', function (e) {
@@ -46,3 +56,16 @@ request.on('error', function (e) {
 });
 
 request.end();
+
+/* const option = {
+  url: 'https://api.memegen.link/images/ermg/ermahgerd/memes.jpg?width=300',
+  dest: './memes',
+};
+
+download
+  .image(option)
+  .then(({ filename }) => {
+    console.log('success' + filename);
+  })
+  .catch((err) => console.error(err));
+ */
