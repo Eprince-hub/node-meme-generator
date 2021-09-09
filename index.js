@@ -1,5 +1,4 @@
-const http = require('https');
-let fs = require('fs');
+const http = require('node:https');
 const cheerio = require('cheerio');
 const download = require('image-downloader');
 
@@ -28,7 +27,7 @@ const request = http.request(options, function (res) {
       imagesUrls.push(extractedUrl);
     });
 
-    // loop for ectracting only 10 array and pushing them to the neededUrls array!
+    // loop for extracting only 10 array and pushing them to the neededUrls array!
     for (let i = 0; i < imagesUrls.length; i++) {
       if (i < 10) {
         neededUrls.push(imagesUrls[i]);
