@@ -1,6 +1,8 @@
+const path = require('node:path');
+const fs = require('node:fs');
 const http = require('node:https');
 const cheerio = require('cheerio');
-const download = require('image-downloader');
+const axios = require('axios').default;
 
 const options = {
   host: 'memegen-link-examples-upleveled.netlify.app',
@@ -34,19 +36,32 @@ const request = http.request(options, function (res) {
       }
     }
 
-    // loop over the array and parse all the url element to the image downloader package!
-    for (const urls of neededUrls) {
-      const option = {
-        url: urls,
-        dest: './memes',
-      };
+    // console.log(neededUrls);
 
-      download
-        .image(option)
-        .then(({ filename }) => {
-          console.log(`Please refer to folder ${filename}`);
-        })
-        .catch((err) => console.error(err));
+    const imageNames = 'image';
+    let imageNumber = 0;
+
+    // using for of loop to loop over all the 10 extracted urls and passing each to axios as a string!
+    for (const imageURLS of neededUrls) {
+      // increase imageNumber value in each iteration to generate number from 1 to 10;
+      imageNumber++;
+
+      // concatenate the imageName and each numbers and the image extension to generate different image names
+      const imageFileExtension = imageNames + imageNumber + '.jpg';
+
+      // using axio to make a get request to each image urls!
+      axios({
+        method: 'get',
+        url: imageURLS,
+        responseType: 'stream',
+      }).then(function (response) {
+        const memesHome = './memes';
+        const imageNewName = imageFileExtension;
+
+        // setting the path and passing it to writestream to write the images to the needed location!
+        const setImagePaths = path.join(memesHome, imageNewName);
+        response.data.pipe(fs.createWriteStream(setImagePaths));
+      });
     }
   });
 });
@@ -56,6 +71,10 @@ request.on('error', function (e) {
 
 request.end();
 
+// Note for my future self!
+// const name = 'joe'  ## path.join('/', 'users', name, 'notes.txt') //'/users/joe/notes.txt'
+
+// ############################################################################
 /* const option = {
   url: 'https://api.memegen.link/images/ermg/ermahgerd/memes.jpg?width=300',
   dest: './memes',
@@ -68,3 +87,36 @@ download
   })
   .catch((err) => console.error(err));
  */
+
+/* const imagePaths = './memes';
+const getImages = (imagePath) =>
+  axios({
+    method: 'get',
+    url: 'https://api.memegen.link/images/ermg/ermahgerd/memes.jpg?width=300',
+    responseType: 'stream',
+  }).then(
+    console.log('are you pending'),
+    (response) =>
+      new Promise((resolve, reject) => {
+        response.data
+          .pipe(fs.createWriteStream(imagePath))
+          .on('finish', () => resolve('Hello World!'))
+          .on('error', (e) => reject(e));
+      }),
+  );
+
+console.log(getImages('./memes/image2.jpg')); */
+
+/* axios({
+  method: 'get',
+  url: 'https://api.memegen.link/images/ermg/ermahgerd/memes.jpg?width=300',
+  responseType: 'stream',
+}).then(function (response) {
+  response.data.pipe(fs.createWriteStream(imageGett));
+}); */
+
+/* const promise1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('foo');
+  }, 300);
+}); */
