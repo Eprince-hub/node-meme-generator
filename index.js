@@ -63,6 +63,8 @@ const request = https.request(options, function fetchRequest(res) {
         } catch (err) {
           console.error(err);
         }
+
+        console.log('Success Check In the Memes Folder');
       });
     }
   });
