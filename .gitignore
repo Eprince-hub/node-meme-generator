@@ -6,3 +6,5 @@ yarn-error.log*
 \n.eslintcache
 memes
 TroubleShooeting
+
+.eslintcache

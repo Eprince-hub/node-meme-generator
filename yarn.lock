@@ -42,7 +42,7 @@
     semver "^6.3.0"
     source-map "^0.5.0"
 
-"@babel/eslint-parser@^7.12.16":
+"@babel/eslint-parser@7.15.4", "@babel/eslint-parser@^7.12.16":
   version "7.15.4"
   resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.15.4.tgz#46385943726291fb3e8db99522c8099b15684387"
   integrity sha512-hPMIAmGNbmQzXJIo2P43Zj9UhRmGev5f9nqdBFOWNGDGh6XKmjby79woBvg6y0Jur6yRfQBneDbUQ8ZVc1krFw==
@@ -461,7 +461,7 @@
   resolved "https://registry.yarnpkg.com/@upleveled/eslint-config-upleveled/-/eslint-config-upleveled-1.18.0.tgz#a014a60b19d8d1d81593e5af9a2c5f449653c3e6"
   integrity sha512-7FhKjwFlzZf+7fPZ8yWuNPdGF6LCXqZ62GPbIgDls39JounhyndGL2uRgz75xDzLgbKU6p1vM2EONW0L7dIT2g==
 
-"@upleveled/eslint-plugin-upleveled@^1.1.0":
+"@upleveled/eslint-plugin-upleveled@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@upleveled/eslint-plugin-upleveled/-/eslint-plugin-upleveled-1.1.0.tgz#bbf146a307bbbd0a7d87e555b8f738dc974fe54f"
   integrity sha512-IRJ+EWlWUmabO6DmqSsmmaRpU+JglzRNZxAcbmre9FwDQMjAT+kyfBSOlkVpR8y/oaOyxWC3pW/lytVO3cvppw==
@@ -1022,12 +1022,12 @@ eslint-plugin-cypress@2.11.2:
   dependencies:
     globals "^11.12.0"
 
-eslint-plugin-flowtype@5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-5.6.0.tgz#9ddba1ce31990c53e144b3a545b7c74b1d164fd9"
-  integrity sha512-XbeDejiL+SecDInj9On/9D4EM31kUp6B3uWYsBH6Vsb2CfaFWiUHvosAZx1TafVjp6izLC7D3kpix1DIpDF4Qw==
+eslint-plugin-flowtype@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-6.0.0.tgz#9af600f9f2a28302fcbdb316c1aafc717a691a00"
+  integrity sha512-oJDVbrIsIoILkEKnImAAWSBeIyOzq075P0qHaShSVU+Vpz8QU7x1mroQCrE4hgDc0DxR7ZDCyUeDoURJWn8drw==
   dependencies:
-    lodash "^4.17.15"
+    lodash "^4.17.21"
     string-natural-compare "^3.0.1"
 
 eslint-plugin-import@2.22.1:
@@ -1128,10 +1128,10 @@ eslint-plugin-testing-library@4.6.0:
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.24.0"
 
-eslint-plugin-unicorn@35.0.0:
-  version "35.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-35.0.0.tgz#40797793d4f645bafaaa7a1396b8f4ca7b2a7dbd"
-  integrity sha512-FHsaO68tDPQILfs/mGF8eSISJp8RswR4FpUuBDnueK2wyEHC6zmsc9WxjYyldXoIsBuVmru6jQyFCbCWPoW/KQ==
+eslint-plugin-unicorn@36.0.0:
+  version "36.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-36.0.0.tgz#db50e1426839e401d33c5a279f49d4a5bbb640d8"
+  integrity sha512-xxN2vSctGWnDW6aLElm/LKIwcrmk6mdiEcW55Uv5krcrVcIFSWMmEgc/hwpemYfZacKZ5npFERGNz4aThsp1AA==
   dependencies:
     "@babel/helper-validator-identifier" "^7.14.9"
     ci-info "^3.2.0"
