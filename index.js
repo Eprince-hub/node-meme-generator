@@ -1,4 +1,4 @@
-const http = require('node:https');
+const https = require('node:https');
 const path = require('node:path');
 const fs = require('node:fs');
 const cheerio = require('cheerio');
@@ -9,40 +9,31 @@ const options = {
   path: '/',
 };
 
-const request = http.request(options, function (res) {
+const request = https.request(options, function fetchRequest(res) {
   let data = '';
-  res.on('data', function (returnedData) {
+  res.on('data', function fetchResponse(returnedData) {
     data += returnedData;
-    // console.log(data);
   });
 
   res.on('end', function () {
     const imagesUrls = []; // array containing all the urls returned from the query
 
-    const neededUrls = []; // array containing the needed 10 urls
-
     const $ = cheerio.load(data);
 
     $('#images div a').each((index, element) => {
       // console.log($(element));
+
       const extractedUrl = $(element).find('img').attr('src'); // finding the url with cheerio and push to array!
       imagesUrls.push(extractedUrl);
     });
 
-    // loop for extracting only 10 array and pushing them to the neededUrls array!
-    for (let i = 0; i < imagesUrls.length; i++) {
-      if (i < 10) {
-        neededUrls.push(imagesUrls[i]);
-      }
-    }
-
-    // console.log(neededUrls);
+    // console.log(imagesUrls.slice(0, 10));
 
     const imageNames = 'image';
     let imageNumber = 0;
 
-    // using for of loop to loop over all the 10 extracted urls and passing each to axios as a string!
-    for (const imageURLS of neededUrls) {
+    // using for of loop to loop over all the 10 sliced urls and passing each to axios as a string!
+    for (const imageURL of imagesUrls.slice(0, 10)) {
       // increase imageNumber value in each iteration to generate number from 1 to 10;
       imageNumber++;
 
@@ -52,21 +43,32 @@ const request = http.request(options, function (res) {
       // using axio to make a get request to each image urls!
       axios({
         method: 'get',
-        url: imageURLS,
+        url: imageURL,
         responseType: 'stream',
-      }).then(function (response) {
+      }).then(function getMemes(response) {
         const memesHome = './memes';
-        const imageNewName = imageFileExtension;
 
-        // setting the path and passing it to writestream to write the images to the needed location!
-        const setImagePaths = path.join(memesHome, imageNewName);
-        response.data.pipe(fs.createWriteStream(setImagePaths));
+        try {
+          if (!fs.existsSync(memesHome)) {
+            fs.mkdirSync(memesHome);
+
+            // if no memes folder is present then this will create a folder with that name and download the memes
+            const setImagePaths = path.join(memesHome, imageFileExtension);
+            response.data.pipe(fs.createWriteStream(setImagePaths));
+          } else {
+            // this would download the memes once a folder with name memes is present
+            const setImagePaths = path.join(memesHome, imageFileExtension);
+            response.data.pipe(fs.createWriteStream(setImagePaths));
+          }
+        } catch (err) {
+          console.error(err);
+        }
       });
     }
   });
 });
-request.on('error', function (e) {
-  console.log(e.message);
+request.on('error', function error(e) {
+  console.error(e.message);
 });
 
 request.end();
